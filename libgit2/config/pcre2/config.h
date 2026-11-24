@@ -5,13 +5,13 @@
 #define HAVE_SYS_STAT_H 1
 #define HAVE_SYS_TYPES_H 1
 
-#if defined(_WIN32)
+#if defined(SPN_BUILD_OS_WINDOWS)
 # define HAVE_WINDOWS_H 1
+# if defined(SPN_BUILD_ABI_GNU)
+#  define HAVE_DIRENT_H 1
+# endif
 #else
 # define HAVE_UNISTD_H 1
-#endif
-
-#if !defined(_MSC_VER)
 # define HAVE_DIRENT_H 1
 #endif
 
