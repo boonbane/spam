@@ -1,0 +1,34 @@
+[package]
+name = "sdl2_mixer"
+version = "2.8.0"
+
+[package.upstream]
+url = "https://github.com/libsdl-org/SDL_mixer.git"
+commit = "a37e09f85d321a13dfcf0d4432827ee09beeb623"
+
+[deps.package]
+sdl2 = { version = "^2.30.0", public = true }
+
+[[lib]]
+name = "SDL2_mixer"
+kinds = ["static"]
+source = [
+  "src/*.c",
+  "src/codecs/*.c",
+]
+include = [
+  "include",
+  "src",
+  "src/codecs",
+]
+define = ["MUSIC_WAV"]
+
+[[example]]
+name = "tone"
+source = [{ path = "example/tone.c", tree = "manifest" }]
+deps = ["SDL2_mixer"]
+
+[package.publish]
+include = [
+  { from = "include/SDL_mixer.h" },
+]

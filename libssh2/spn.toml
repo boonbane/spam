@@ -1,0 +1,111 @@
+[package]
+name = "libssh2"
+version = "1.11.2"
+author = "libssh2"
+maintainer = "tspader"
+include = ["include", "src"]
+define = [
+  { value = "_DEFAULT_SOURCE", when = { os = "linux" } },
+  { value = "HAVE_UNISTD_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_INTTYPES_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_SYS_SELECT_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_SYS_TIME_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_SYS_UIO_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_SYS_IOCTL_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_SYS_UN_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_ARPA_INET_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_NETINET_IN_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_O_NONBLOCK", when = { os = { not = "windows" } } },
+  { value = "HAVE_POLL", when = { os = { not = "windows" } } },
+]
+system_deps = [
+  { lib = "ws2_32", when = { os = "windows" } },
+  { lib = "user32", when = { os = "windows" } },
+  { lib = "crypt32", when = { crypto = "wincng" } },
+  { lib = "bcrypt", when = { crypto = "wincng" } },
+]
+
+[package.upstream]
+url = "https://github.com/libssh2/libssh2.git"
+commit = "805317f6ebf37c7e68ca72578a90eeeee04488ee"
+
+[deps.package]
+openssl = { version = "4.2.0", when = { crypto = "openssl" } }
+mbedtls = { version = "3.6.7", when = { crypto = "mbedtls" } }
+zlib = { version = "1.3.2", when = { zlib = true } }
+
+[options.crypto]
+type = "enum"
+values = ["openssl", "mbedtls", "wincng"]
+default = "openssl"
+
+[options.zlib]
+type = "bool"
+default = false
+define = "LIBSSH2_HAVE_ZLIB"
+
+[options.debug_logging]
+type = "bool"
+default = false
+define = "LIBSSH2DEBUG"
+
+[options.no_deprecated]
+type = "bool"
+default = false
+public = true
+define = "LIBSSH2_NO_DEPRECATED"
+
+[[lib]]
+name = "ssh2"
+kinds = ["static"]
+define = [
+  { value = "LIBSSH2_OPENSSL", when = { crypto = "openssl" } },
+  { value = "LIBSSH2_MBEDTLS", when = { crypto = "mbedtls" } },
+  { value = "LIBSSH2_WINCNG", when = { crypto = "wincng" } },
+  { value = "LIBSSH2_ECDSA_WINCNG", when = { crypto = "wincng" } },
+]
+source = [
+  "src/agent.c",
+  "src/bcrypt_pbkdf.c",
+  "src/chacha.c",
+  "src/channel.c",
+  "src/cipher-chachapoly.c",
+  "src/comp.c",
+  "src/crypt.c",
+  "src/global.c",
+  "src/hostkey.c",
+  "src/keepalive.c",
+  "src/kex.c",
+  "src/knownhost.c",
+  "src/mac.c",
+  "src/misc.c",
+  "src/packet.c",
+  "src/pem.c",
+  "src/poly1305.c",
+  "src/publickey.c",
+  "src/scp.c",
+  "src/session.c",
+  "src/sftp.c",
+  "src/transport.c",
+  "src/userauth.c",
+  "src/userauth_kbd_packet.c",
+  "src/version.c",
+  { path = "src/openssl.c", when = { crypto = "openssl" } },
+  { path = "src/mbedtls.c", when = { crypto = "mbedtls" } },
+  { path = "src/wincng.c", when = { crypto = "wincng" } },
+]
+
+[[example]]
+name = "methods"
+source = [{ path = "example/methods.c", tree = "manifest" }]
+deps = ["ssh2"]
+
+[[example]]
+name = "exec"
+source = [{ path = "example/exec.c", tree = "manifest" }]
+deps = ["ssh2"]
+
+[package.publish]
+include = [
+  { from = "include/*.h" },
+]

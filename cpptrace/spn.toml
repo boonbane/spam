@@ -1,0 +1,116 @@
+[package]
+name = "cpptrace"
+version = "0.7.3"
+system_deps = [
+  { lib = "dl", when = { os = "linux" } },
+  { lib = "dbghelp", when = { os = "windows" } },
+]
+
+[package.upstream]
+url = "https://github.com/jeremy-rifkin/cpptrace.git"
+commit = "4354eb21ea3565a73afdf32ec0ba768fd648c425"
+
+[deps.package]
+libdwarf = { version = "2.3.4", when = { symbols = "libdwarf" } }
+libbacktrace = { version = "1.0.0", when = { symbols = "libbacktrace" } }
+
+[options.symbols]
+type = "enum"
+values = ["libdwarf", "libbacktrace", "libdl", "addr2line", "dbghelp", "nothing"]
+default = [
+  { value = "dbghelp", when = { abi = "msvc" } },
+  { value = "dbghelp", when = { os = "windows", driver = "zig" } },
+  { value = "libbacktrace", when = { abi = "musl" } },
+  { value = "libdwarf" },
+]
+
+[options.static]
+type = "bool"
+default = true
+define = "CPPTRACE_STATIC_DEFINE"
+public = true
+
+[options.no_std_format]
+type = "bool"
+default = false
+define = "CPPTRACE_NO_STD_FORMAT"
+public = true
+
+[options.unprefixed_try_catch]
+type = "bool"
+default = false
+define = "CPPTRACE_UNPREFIXED_TRY_CATCH"
+public = true
+
+[[lib]]
+name = "cpptrace"
+kinds = ["static"]
+include = ["include", "src"]
+source = [
+  "src/binary/elf.cpp",
+  "src/binary/mach-o.cpp",
+  "src/binary/module_base.cpp",
+  "src/binary/object.cpp",
+  "src/binary/pe.cpp",
+  "src/binary/safe_dl.cpp",
+  "src/cpptrace.cpp",
+  "src/ctrace.cpp",
+  "src/exceptions.cpp",
+  "src/from_current.cpp",
+  "src/options.cpp",
+  "src/utils.cpp",
+  "src/demangle/demangle_with_cxxabi.cpp",
+  "src/demangle/demangle_with_nothing.cpp",
+  "src/demangle/demangle_with_winapi.cpp",
+  "src/snippets/snippet.cpp",
+  "src/symbols/dwarf/debug_map_resolver.cpp",
+  "src/symbols/dwarf/dwarf_resolver.cpp",
+  "src/symbols/symbols_core.cpp",
+  "src/symbols/symbols_with_addr2line.cpp",
+  "src/symbols/symbols_with_dbghelp.cpp",
+  "src/symbols/symbols_with_dl.cpp",
+  "src/symbols/symbols_with_libbacktrace.cpp",
+  "src/symbols/symbols_with_libdwarf.cpp",
+  "src/symbols/symbols_with_nothing.cpp",
+  "src/unwind/unwind_with_dbghelp.cpp",
+  "src/unwind/unwind_with_execinfo.cpp",
+  "src/unwind/unwind_with_nothing.cpp",
+  "src/unwind/unwind_with_unwind.cpp",
+  "src/unwind/unwind_with_winapi.cpp",
+  "src/utils/microfmt.cpp",
+  "src/utils/utils.cpp",
+  "src/platform/dbghelp_syminit_manager.cpp",
+]
+define = [
+  { value = "NOMINMAX", when = { os = "windows" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_LIBDWARF", when = { symbols = "libdwarf" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_LIBBACKTRACE", when = { symbols = "libbacktrace" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_LIBDL", when = { symbols = "libdl" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_ADDR2LINE", when = { symbols = "addr2line" } },
+  { value = "CPPTRACE_ADDR2LINE_SEARCH_SYSTEM_PATH", when = { symbols = "addr2line" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_DBGHELP", when = { symbols = "dbghelp" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_DBGHELP", when = { symbols = "libdwarf", os = "windows" } },
+  { value = "CPPTRACE_GET_SYMBOLS_WITH_NOTHING", when = { symbols = "nothing" } },
+  { value = "CPPTRACE_UNWIND_WITH_UNWIND", when = { os = "linux" } },
+  { value = "CPPTRACE_UNWIND_WITH_EXECINFO", when = { os = "macos" } },
+  { value = "CPPTRACE_UNWIND_WITH_DBGHELP", when = { os = "windows", arch = "x86_64" } },
+  { value = "CPPTRACE_UNWIND_WITH_WINAPI", when = { os = "windows", arch = "aarch64" } },
+  { value = "CPPTRACE_DEMANGLE_WITH_CXXABI", when = { abi = { not = "msvc" } } },
+  { value = "CPPTRACE_DEMANGLE_WITH_WINAPI", when = { abi = "msvc" } },
+  { value = "CPPTRACE_HAS_CXX_EXCEPTION_TYPE", when = { abi = { not = "msvc" } } },
+  { value = "CPPTRACE_HAS_DLADDR1", when = { os = "linux", abi = "gnu" } },
+  { value = "HAS_MACH_VM", when = { os = "macos" } },
+]
+cxx = { standard = "c++11" }
+
+[[example]]
+name = "trace"
+source = [{ path = "example/trace.cpp", tree = "manifest" }]
+deps = ["cpptrace"]
+cxx = { standard = "c++17" }
+
+[package.publish]
+include = [
+  { from = "include/cpptrace/*", to = "cpptrace" },
+  { from = "include/ctrace/*", to = "ctrace" },
+]

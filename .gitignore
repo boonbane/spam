@@ -1,0 +1,7 @@
+/wip/
+/.clangd
+
+build/
+.cache/
+spn.lock
+compile_commands.json

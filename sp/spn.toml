@@ -1,0 +1,74 @@
+[package]
+name = "sp"
+version = "5.0.0"
+author = "tspader"
+maintainer = "tspader"
+
+[package.upstream]
+url = "https://github.com/tspader/sp.git"
+commit = "574d537381a536cc5c70520348d0030c5d32fefc"
+
+[[example]]
+name = "app"
+source = ["example/app.c"]
+
+[[example]]
+name = "array"
+source = ["example/array.c"]
+
+[[example]]
+name = "cargo"
+source = ["example/cargo.c"]
+
+[[example]]
+name = "cli"
+source = ["example/cli.c"]
+
+[[example]]
+name = "format"
+source = ["example/format.c"]
+
+[[example]]
+name = "hash_table"
+source = ["example/hash_table.c"]
+
+[[example]]
+name = "io"
+source = ["example/io.c"]
+
+[[example]]
+name = "ls"
+source = ["example/ls.c"]
+
+[[example]]
+name = "palette"
+source = ["example/palette.c"]
+
+[[example]]
+name = "prompt"
+source = ["example/prompt.c"]
+
+[[example]]
+name = "prompt_fancy"
+source = ["example/prompt_fancy.c"]
+
+[[example]]
+name = "signal"
+source = ["example/signal.c"]
+
+[[example]]
+name = "wc"
+source = ["example/wc.c"]
+
+[[example]]
+name = "zero_copy"
+source = ["example/zero_copy.c"]
+
+[package.publish]
+include = [
+  { from = "sp.h" },
+  { from = "sp/*", to = "sp" },
+]
+system_deps = [
+  { lib = "m", when = { os = "linux" } },
+]

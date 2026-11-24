@@ -1,0 +1,20 @@
+[package]
+name = "dbus"
+version = "1.16.99"
+
+[package.upstream]
+url = "https://gitlab.freedesktop.org/dbus/dbus.git"
+commit = "f64ae3cafdcf31606401171bb0e8fe3fccc761c2"
+
+[package.publish]
+include = [
+  { from = "dbus/*.h", to = "dbus" },
+  { from = "config/dbus-arch-deps.h", tree = "manifest", to = "dbus" },
+]
+
+[[example]]
+name = "version"
+source = [{ path = "example/version.c", tree = "manifest" }]
+
+[profile.default]
+abi = { value = "gnu", when = { os = "linux" } }

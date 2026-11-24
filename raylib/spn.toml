@@ -1,0 +1,96 @@
+[package]
+name = "raylib"
+version = "6.0.0"
+author = "raysan5"
+maintainer = "tspader"
+system_deps = [
+  { lib = "m", when = { os = "linux" } },
+  { lib = "pthread", when = { os = "linux" } },
+  { lib = "dl", when = { os = "linux" } },
+  { lib = "user32", when = { os = "windows" } },
+  { lib = "gdi32", when = { os = "windows" } },
+  { lib = "shell32", when = { os = "windows" } },
+  { lib = "winmm", when = { os = "windows" } },
+]
+
+[package.upstream]
+url = "https://github.com/raysan5/raylib.git"
+commit = "a4680fc67734754138650138f11c54dc798ede56"
+
+[deps.package]
+xorgproto = { version = "2025.1.0", when = { os = "linux" } }
+libx11 = { version = "1.8.13", when = { os = "linux" } }
+libxext = { version = "1.3.7", when = { os = "linux" } }
+libxcursor = { version = "1.2.3", when = { os = "linux" } }
+libxfixes = { version = "6.0.2", when = { os = "linux" } }
+libxi = { version = "1.8.3", when = { os = "linux" } }
+libxrandr = { version = "1.5.5", when = { os = "linux" } }
+libxrender = { version = "0.9.12", when = { os = "linux" } }
+libxinerama = { version = "1.1.6", when = { os = "linux" } }
+
+[[lib]]
+name = "raylib"
+kinds = ["static"]
+source = [
+  "src/rcore.c",
+  "src/rshapes.c",
+  "src/rtextures.c",
+  "src/rtext.c",
+  "src/rmodels.c",
+  "src/raudio.c",
+  { path = "src/rglfw.c", when = { os = { not = "macos" } } },
+  { path = "rglfw.m", tree = "manifest", when = { os = "macos" } },
+]
+include = [
+  "src",
+  "src/external/glfw/include",
+]
+define = [
+  "PLATFORM_DESKTOP_GLFW",
+  "GRAPHICS_API_OPENGL_33",
+  { value = "_GLFW_X11", when = { os = "linux" } },
+  { value = "SUPPORT_CLIPBOARD_IMAGE=0", when = { os = "linux" } },
+  { value = "_CRT_SECURE_NO_WARNINGS", when = { os = "windows" } },
+  { value = "GL_SILENCE_DEPRECATION", when = { os = "macos" } },
+]
+system_deps = [
+  { framework = "Cocoa" },
+  { framework = "IOKit" },
+  { framework = "CoreFoundation" },
+  { framework = "CoreAudio" },
+  { framework = "CoreVideo" },
+  { framework = "OpenGL" },
+]
+
+[[example]]
+name = "core_basic_window"
+source = ["examples/core/core_basic_window.c"]
+deps = ["raylib"]
+
+[[example]]
+name = "core_input_keys"
+source = ["examples/core/core_input_keys.c"]
+deps = ["raylib"]
+
+[[example]]
+name = "core_3d_camera_mode"
+source = ["examples/core/core_3d_camera_mode.c"]
+deps = ["raylib"]
+
+[[example]]
+name = "shapes_basic_shapes"
+source = ["examples/shapes/shapes_basic_shapes.c"]
+deps = ["raylib"]
+
+[[example]]
+name = "text_format_text"
+source = ["examples/text/text_format_text.c"]
+deps = ["raylib"]
+
+[package.publish]
+include = [
+  { from = "src/raylib.h" },
+  { from = "src/raymath.h" },
+  { from = "src/rlgl.h" },
+  { from = "src/rcamera.h" },
+]

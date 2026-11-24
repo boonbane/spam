@@ -1,0 +1,39 @@
+[package]
+name = "spirv_tools"
+version = "2024.4.0"
+include = [".", "include", { path = "gen", tree = "manifest" }]
+
+[package.upstream]
+url = "https://github.com/KhronosGroup/SPIRV-Tools"
+commit = "4d2f0b40bfe290dea6c6904dafdf7fd8328ba346"
+
+[deps.package]
+spirv_headers = "=1.4.304"
+
+[deps.tool]
+sp = "5.0.0"
+
+[[tool]]
+name = "generate"
+source = [{ path = "tools/generate.c", tree = "manifest" }]
+
+[[lib]]
+name = "spirv_tools"
+kinds = ["static"]
+source = [
+  "source/*.cpp",
+  "source/util/*.cpp",
+  "source/val/*.cpp",
+  "source/opt/*.cpp",
+]
+cxx = { standard = "c++17" }
+
+[[example]]
+name = "basic"
+source = [{ path = "example/basic.c", tree = "manifest" }]
+deps = ["spirv_tools"]
+
+[package.publish]
+include = [
+  { from = "include/spirv-tools/*", to = "spirv-tools" },
+]

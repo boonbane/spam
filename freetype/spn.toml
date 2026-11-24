@@ -1,0 +1,104 @@
+[package]
+name = "freetype"
+version = "2.13.2"
+
+[package.upstream]
+url = "https://github.com/freetype/freetype.git"
+commit = "920c5502cc3ddda88f6c7d85ee834ac611bb11cc"
+
+[options.error_strings]
+type = "bool"
+default = true
+define = "FT_CONFIG_OPTION_ERROR_STRINGS"
+
+[options.subpixel_rendering]
+type = "bool"
+default = false
+define = "FT_CONFIG_OPTION_SUBPIXEL_RENDERING"
+
+[options.debug]
+type = "enum"
+values = ["none", "error", "trace"]
+default = "none"
+
+[[lib]]
+name = "freetype"
+kinds = ["static"]
+include = ["include"]
+source = [
+  "src/autofit/autofit.c",
+  "src/base/ftbase.c",
+  "src/base/ftbbox.c",
+  "src/base/ftbdf.c",
+  "src/base/ftbitmap.c",
+  "src/base/ftcid.c",
+  "src/base/ftfstype.c",
+  "src/base/ftgasp.c",
+  "src/base/ftglyph.c",
+  "src/base/ftgxval.c",
+  "src/base/ftinit.c",
+  "src/base/ftmm.c",
+  "src/base/ftotval.c",
+  "src/base/ftpatent.c",
+  "src/base/ftpfr.c",
+  "src/base/ftstroke.c",
+  "src/base/ftsynth.c",
+  "src/base/fttype1.c",
+  "src/base/ftwinfnt.c",
+  "src/bdf/bdf.c",
+  "src/bzip2/ftbzip2.c",
+  "src/cache/ftcache.c",
+  "src/cff/cff.c",
+  "src/cid/type1cid.c",
+  "src/gzip/ftgzip.c",
+  "src/lzw/ftlzw.c",
+  "src/pcf/pcf.c",
+  "src/pfr/pfr.c",
+  "src/psaux/psaux.c",
+  "src/pshinter/pshinter.c",
+  "src/psnames/psnames.c",
+  "src/raster/raster.c",
+  "src/sdf/sdf.c",
+  "src/sfnt/sfnt.c",
+  "src/smooth/smooth.c",
+  "src/svg/svg.c",
+  "src/truetype/truetype.c",
+  "src/type1/type1.c",
+  "src/type42/type42.c",
+  "src/winfonts/winfnt.c",
+  { path = "src/base/ftdebug.c", when = { os = { not = "windows" } } },
+  { path = "builds/windows/ftdebug.c", when = { os = "windows" } },
+  { path = "builds/unix/ftsystem.c", when = { os = { not = "windows" } } },
+  { path = "builds/windows/ftsystem.c", when = { os = "windows" } },
+]
+define = [
+  "FT2_BUILD_LIBRARY",
+  { value = "FT_DEBUG_LEVEL_ERROR", when = { debug = "error" } },
+  { value = "FT_DEBUG_LEVEL_TRACE", when = { debug = "trace" } },
+  { value = "HAVE_UNISTD_H", when = { os = { not = "windows" } } },
+  { value = "HAVE_FCNTL_H", when = { os = { not = "windows" } } },
+  { value = "_CRT_SECURE_NO_WARNINGS", when = { abi = "msvc" } },
+  { value = "_CRT_NONSTDC_NO_WARNINGS", when = { abi = "msvc" } },
+]
+
+[[example]]
+name = "fontinfo"
+source = [{ path = "example/fontinfo.c", tree = "manifest" }]
+deps = ["freetype"]
+
+[[example]]
+name = "lcd"
+source = [{ path = "example/lcd.c", tree = "manifest" }]
+deps = ["freetype"]
+
+[[example]]
+name = "formats"
+source = [{ path = "example/formats.c", tree = "manifest" }]
+deps = ["freetype"]
+
+[package.publish]
+include = [
+  { from = "include/ft2build.h" },
+  { from = "include/freetype/*", to = "freetype" },
+  { from = "include/freetype/config/*", to = "freetype/config" },
+]

@@ -1,0 +1,14 @@
+[package]
+name = "utest"
+version = "1.2.0"
+author = "sheredom"
+maintainer = "tspader"
+
+[package.upstream]
+url = "https://github.com/sheredom/utest.h.git"
+commit = "fb622dc480a5"
+
+[package.publish]
+include = [
+  { from = "utest.h" },
+]

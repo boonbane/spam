@@ -1,0 +1,196 @@
+[package]
+name = "curl"
+version = "8.19.0"
+author = "curl"
+maintainer = "tspader"
+include = ["include"]
+system_deps = [
+  { lib = "pthread", when = { os = "linux" } },
+  { lib = "ws2_32", when = { os = "windows" } },
+  { lib = "iphlpapi", when = { os = "windows" } },
+  { lib = "bcrypt", when = { os = "windows" } },
+  { lib = "advapi32", when = { os = "windows" } },
+  { lib = "crypt32", when = { os = "windows" } },
+  { lib = "secur32", when = { os = "windows" } },
+  { lib = "normaliz", when = { os = "windows", idn = true } },
+  { lib = "icucore", when = { os = "macos", idn = true } },
+  { lib = "iconv", when = { os = "macos", idn = true } },
+]
+
+[package.upstream]
+url = "https://github.com/curl/curl.git"
+commit = "8c908d2d0a6d32abdedda2c52e90bd56ec76c24d"
+
+[package.publish]
+include = [
+  { from = "include/curl/*.h", to = "curl" },
+]
+define = ["CURL_STATICLIB"]
+
+[deps.package]
+mbedtls = { version = "3.6.7", when = { tls = true, os = { not = "windows" } } }
+
+[options.tls]
+type = "bool"
+default = true
+define = "SPN_CURL_TLS"
+
+[options.idn]
+type = "bool"
+default = false
+define = "SPN_CURL_IDN"
+
+[options.ftp]
+type = "bool"
+default = true
+define = "SPN_CURL_FTP"
+
+[options.file]
+type = "bool"
+default = true
+define = "SPN_CURL_FILE"
+
+[options.dict]
+type = "bool"
+default = true
+define = "SPN_CURL_DICT"
+
+[options.gopher]
+type = "bool"
+default = true
+define = "SPN_CURL_GOPHER"
+
+[options.imap]
+type = "bool"
+default = true
+define = "SPN_CURL_IMAP"
+
+[options.pop3]
+type = "bool"
+default = true
+define = "SPN_CURL_POP3"
+
+[options.smtp]
+type = "bool"
+default = true
+define = "SPN_CURL_SMTP"
+
+[options.telnet]
+type = "bool"
+default = true
+define = "SPN_CURL_TELNET"
+
+[options.tftp]
+type = "bool"
+default = true
+define = "SPN_CURL_TFTP"
+
+[options.mqtt]
+type = "bool"
+default = true
+define = "SPN_CURL_MQTT"
+
+[options.rtsp]
+type = "bool"
+default = true
+define = "SPN_CURL_RTSP"
+
+[options.smb]
+type = "bool"
+default = true
+define = "SPN_CURL_SMB"
+
+[options.ipfs]
+type = "bool"
+default = true
+define = "SPN_CURL_IPFS"
+
+[options.websockets]
+type = "bool"
+default = true
+define = "SPN_CURL_WEBSOCKETS"
+
+[options.proxy]
+type = "bool"
+default = true
+define = "SPN_CURL_PROXY"
+
+[options.cookies]
+type = "bool"
+default = true
+define = "SPN_CURL_COOKIES"
+
+[options.doh]
+type = "bool"
+default = true
+define = "SPN_CURL_DOH"
+
+[options.hsts]
+type = "bool"
+default = true
+define = "SPN_CURL_HSTS"
+
+[options.altsvc]
+type = "bool"
+default = true
+define = "SPN_CURL_ALTSVC"
+
+[options.netrc]
+type = "bool"
+default = true
+define = "SPN_CURL_NETRC"
+
+[options.mime]
+type = "bool"
+default = true
+define = "SPN_CURL_MIME"
+
+[options.verbose_strings]
+type = "bool"
+default = true
+define = "SPN_CURL_VERBOSE_STRINGS"
+
+[[lib]]
+name = "curl"
+kinds = ["static"]
+include = ["lib", { path = "config", tree = "manifest" }]
+define = [
+  "BUILDING_LIBCURL",
+  "HAVE_CONFIG_H",
+  { value = "_GNU_SOURCE", when = { os = "linux" } },
+]
+source = [
+  "lib/*.c",
+  "lib/curlx/*.c",
+  "lib/vauth/*.c",
+  "lib/vtls/*.c",
+  "lib/vquic/*.c",
+  "lib/vssh/*.c",
+  { path = "config/ca_bundle.c", tree = "manifest", when = { tls = true, os = { not = "windows" } } },
+]
+system_deps = [
+  { framework = "SystemConfiguration" },
+  { framework = "CoreFoundation" },
+]
+
+[[bin]]
+name = "curl"
+include = ["lib", "src", { path = "config", tree = "manifest" }]
+define = [
+  "HAVE_CONFIG_H",
+  { value = "_GNU_SOURCE", when = { os = "linux" } },
+]
+source = [
+  "src/tool_*.c",
+  "src/config2setopts.c",
+  "src/slist_wc.c",
+  "src/terminal.c",
+  "src/var.c",
+  "src/toolx/tool_time.c",
+]
+deps = ["curl"]
+
+[[example]]
+name = "get"
+source = [{ path = "example/get.c", tree = "manifest" }]
+deps = ["curl"]
