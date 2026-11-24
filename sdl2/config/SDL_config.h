@@ -1,15 +1,19 @@
 #ifndef SDL_config_h_
 #define SDL_config_h_
+
 #include "SDL_platform.h"
+
 #if defined(__WIN32__)
-#include "SDL_config_windows.h"
-#undef HAVE_WINDOWS_GAMING_INPUT_H
-#undef SDL_JOYSTICK_WGI
+  #include "SDL_config_windows.h"
+  #undef HAVE_WINDOWS_GAMING_INPUT_H
+  #undef SDL_JOYSTICK_WGI
 #elif defined(__MACOSX__)
-#include "SDL_config_macosx.h"
+  #include "SDL_config_macosx.h"
 #elif defined(__LINUX__)
-#include "SDL_config_spn.h"
+  #include "SDL_config_linux.h"
+  #include "SDL_config_backends.h"
 #else
-#error spn sdl2: unsupported platform
+  #error "spn sdl2: unsupported platform"
 #endif
+
 #endif
