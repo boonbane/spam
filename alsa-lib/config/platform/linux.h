@@ -1,0 +1,32 @@
+#ifndef SPN_ALSA_LINUX_H
+#define SPN_ALSA_LINUX_H
+
+#define HAVE_ATTRIBUTE_SYMVER 0
+#define HAVE_CLOCK_GETTIME 1
+#define HAVE_DLFCN_H 1
+#define HAVE_EACCESS 1
+#define HAVE_ENDIAN_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_LIBDL 1
+#define HAVE_LIBPTHREAD 1
+#define HAVE_LIBRT 1
+#define HAVE_MALLOC_H 1
+#define HAVE_MMX "1"
+#define HAVE_PTHREAD_MUTEX_RECURSIVE
+#define HAVE_STDINT_H 1
+#define HAVE_STDIO_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRINGS_H 1
+#define HAVE_STRING_H 1
+#define HAVE_SYS_SHM_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_USELOCALE 1
+#define HAVE_WCHAR_H 1
+#define HAVE___THREAD 1
+#define STDC_HEADERS 1
+#define TIME_WITH_SYS_TIME 1
+
+#endif
