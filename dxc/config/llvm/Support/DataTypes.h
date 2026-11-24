@@ -29,11 +29,7 @@
 #define HAVE_INTTYPES_H 1
 #define HAVE_STDINT_H 1
 #define HAVE_UINT64_T 1
-#if defined(_WIN32)
-/* #undef HAVE_U_INT64_T */
-#elif defined(__APPLE__)
-#define HAVE_U_INT64_T 1
-#else
+#if !defined(_WIN32)
 #define HAVE_U_INT64_T 1
 #endif
 

@@ -1,0 +1,55 @@
+#ifndef SPN_DXC_POSIX_H
+#define SPN_DXC_POSIX_H
+
+#define HAVE_CLOSEDIR 1
+#define HAVE_CXXABI_H 1
+#define HAVE_DECL_STRERROR_S 0
+#define HAVE_DIRENT_H 1
+#define HAVE_DLERROR 1
+#define HAVE_DLFCN_H 1
+#define HAVE_DLOPEN 1
+#define HAVE_FUTIMES 1
+#define HAVE_FUTIMENS 1
+#define HAVE_GETCWD 1
+#define HAVE_GETPAGESIZE 1
+#define HAVE_GETRLIMIT 1
+#define HAVE_GETRUSAGE 1
+#define HAVE_GETTIMEOFDAY 1
+#define HAVE_ISATTY 1
+#define HAVE_LIBDL 1
+#define HAVE_LIBPTHREAD 1
+#define HAVE_MKDTEMP 1
+#define HAVE_MKSTEMP 1
+#define HAVE_MKTEMP 1
+#define HAVE_OPENDIR 1
+#define HAVE_POSIX_SPAWN 1
+#define HAVE_PREAD 1
+#define HAVE_PTHREAD_GETSPECIFIC 1
+#define HAVE_PTHREAD_H 1
+#define HAVE_PTHREAD_MUTEX_LOCK 1
+#define HAVE_PTHREAD_RWLOCK_INIT 1
+#define HAVE_RAND48 1
+#define HAVE_READDIR 1
+#define HAVE_REALPATH 1
+#define HAVE_SBRK 1
+#define HAVE_SETENV 1
+#define HAVE_SETRLIMIT 1
+#define HAVE_STRERROR_R 1
+#define HAVE_STRTOQ 1
+#define HAVE_SYS_IOCTL_H 1
+#define HAVE_SYS_MMAN_H 1
+#define HAVE_SYS_PARAM_H 1
+#define HAVE_SYS_RESOURCE_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYS_UIO_H 1
+#define HAVE_SYS_WAIT_H 1
+#define HAVE_TERMIOS_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_UTIME_H 1
+#define HAVE_U_INT64_T 1
+#define HAVE_WRITEV 1
+#define HAVE_ZLIB_H 1
+#define LLVM_HOST_TRIPLE "x86_64-unknown-linux-gnu"
+#define LLVM_ON_UNIX 1
+
+#endif

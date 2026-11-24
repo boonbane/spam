@@ -1,0 +1,13 @@
+#ifndef SPN_DXC_MACOS_H
+#define SPN_DXC_MACOS_H
+
+#define HAVE_DECL_ARC4RANDOM 1
+#define HAVE_BACKTRACE 1
+#define HAVE_EXECINFO_H 1
+#define HAVE_MACH_MACH_H 1
+#define HAVE_MACH_O_DYLD_H 1
+#define HAVE_MALLOC_MALLOC_H 1
+#define HAVE_MALLOC_ZONE_STATISTICS 1
+#define LTDL_SHLIB_EXT ".dylib"
+
+#endif

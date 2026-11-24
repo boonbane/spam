@@ -41,8 +41,6 @@
 /* Host triple LLVM will be executed on */
 #if defined(_WIN32)
 #define LLVM_HOST_TRIPLE "x86_64-pc-win32"
-#elif defined(__APPLE__)
-#define LLVM_HOST_TRIPLE "x86_64-unknown-linux-gnu"
 #else
 #define LLVM_HOST_TRIPLE "x86_64-unknown-linux-gnu"
 #endif
@@ -78,21 +76,13 @@
 /* #undef LLVM_NATIVE_TARGETMC */
 
 /* Define if this is Unixish platform */
-#if defined(_WIN32)
-/* #undef LLVM_ON_UNIX */
-#elif defined(__APPLE__)
-#define LLVM_ON_UNIX 1
-#else
+#if !defined(_WIN32)
 #define LLVM_ON_UNIX 1
 #endif
 
 /* Define if this is Win32ish platform */
 #if defined(_WIN32)
 #define LLVM_ON_WIN32 1
-#elif defined(__APPLE__)
-/* #undef LLVM_ON_WIN32 */
-#else
-/* #undef LLVM_ON_WIN32 */
 #endif
 
 /* Installation prefix directory */
