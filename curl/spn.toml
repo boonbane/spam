@@ -5,6 +5,17 @@ author = "curl"
 maintainer = "tspader"
 include = ["include"]
 define = [
+  "USE_IPV6",
+  "CURL_DISABLE_LDAP",
+  "CURL_DISABLE_LDAPS",
+  { value = "USE_UNIX_SOCKETS", when = { os = { not = "windows" } } },
+  { value = "USE_THREADS_POSIX", when = { os = { not = "windows" } } },
+  { value = "USE_WINDOWS_SSPI", when = { os = "windows" } },
+  { value = "USE_SCHANNEL", when = { os = "windows", tls = true } },
+  { value = "USE_MBEDTLS", when = { os = { not = "windows" }, tls = true } },
+  { value = "HAVE_MBEDTLS_DES_CRYPT_ECB", when = { os = { not = "windows" }, tls = true } },
+  { value = "USE_WIN32_IDN", when = { os = "windows", idn = true } },
+  { value = "USE_APPLE_IDN", when = { os = "macos", idn = true } },
   { value = "CURL_DISABLE_FTP", when = { ftp = false } },
   { value = "CURL_DISABLE_FILE", when = { file = false } },
   { value = "CURL_DISABLE_DICT", when = { dict = false } },
@@ -59,12 +70,10 @@ mbedtls = { version = "3.6.7", when = { tls = true, os = { not = "windows" } } }
 [options.tls]
 type = "bool"
 default = true
-define = "SPN_CURL_TLS"
 
 [options.idn]
 type = "bool"
 default = false
-define = "SPN_CURL_IDN"
 
 [options.ftp]
 type = "bool"
