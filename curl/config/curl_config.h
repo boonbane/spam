@@ -158,8 +158,6 @@
   #ifdef SPN_CURL_TLS
     #define USE_MBEDTLS 1
     #define HAVE_MBEDTLS_DES_CRYPT_ECB 1
-    extern char spn_curl_ca_bundle[];
-    #define CURL_CA_BUNDLE spn_curl_ca_bundle
   #endif
 #endif
 
@@ -168,76 +166,5 @@
 #define USE_IPV6 1
 #define CURL_DISABLE_LDAP 1
 #define CURL_DISABLE_LDAPS 1
-
-#ifndef SPN_CURL_FTP
-  #define CURL_DISABLE_FTP 1
-#endif
-#ifndef SPN_CURL_FILE
-  #define CURL_DISABLE_FILE 1
-#endif
-#ifndef SPN_CURL_DICT
-  #define CURL_DISABLE_DICT 1
-#endif
-#ifndef SPN_CURL_GOPHER
-  #define CURL_DISABLE_GOPHER 1
-#endif
-#ifndef SPN_CURL_IMAP
-  #define CURL_DISABLE_IMAP 1
-#endif
-#ifndef SPN_CURL_POP3
-  #define CURL_DISABLE_POP3 1
-#endif
-#ifndef SPN_CURL_SMTP
-  #define CURL_DISABLE_SMTP 1
-#endif
-#ifndef SPN_CURL_TELNET
-  #define CURL_DISABLE_TELNET 1
-#endif
-#ifndef SPN_CURL_TFTP
-  #define CURL_DISABLE_TFTP 1
-#endif
-#ifndef SPN_CURL_MQTT
-  #define CURL_DISABLE_MQTT 1
-#endif
-#ifndef SPN_CURL_RTSP
-  #define CURL_DISABLE_RTSP 1
-#endif
-#ifndef SPN_CURL_SMB
-  #define CURL_DISABLE_SMB 1
-#endif
-#ifndef SPN_CURL_IPFS
-  #define CURL_DISABLE_IPFS 1
-#endif
-#ifndef SPN_CURL_WEBSOCKETS
-  #define CURL_DISABLE_WEBSOCKETS 1
-#endif
-#ifndef SPN_CURL_PROXY
-  #define CURL_DISABLE_PROXY 1
-#endif
-#ifndef SPN_CURL_COOKIES
-  #define CURL_DISABLE_COOKIES 1
-#endif
-#ifndef SPN_CURL_DOH
-  #define CURL_DISABLE_DOH 1
-#endif
-#ifndef SPN_CURL_HSTS
-  #define CURL_DISABLE_HSTS 1
-#endif
-#ifndef SPN_CURL_ALTSVC
-  #define CURL_DISABLE_ALTSVC 1
-#endif
-#ifndef SPN_CURL_NETRC
-  #define CURL_DISABLE_NETRC 1
-#endif
-#ifndef SPN_CURL_MIME
-  #define CURL_DISABLE_MIME 1
-  #define CURL_DISABLE_FORM_API 1
-#endif
-#ifndef SPN_CURL_VERBOSE_STRINGS
-  #define CURL_DISABLE_VERBOSE_STRINGS 1
-#endif
-#if !defined(USE_MBEDTLS) && !defined(USE_SCHANNEL)
-  #define CURL_DISABLE_HSTS 1
-#endif
 
 #endif

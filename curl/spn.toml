@@ -4,6 +4,32 @@ version = "8.19.0"
 author = "curl"
 maintainer = "tspader"
 include = ["include"]
+define = [
+  { value = "CURL_DISABLE_FTP", when = { ftp = false } },
+  { value = "CURL_DISABLE_FILE", when = { file = false } },
+  { value = "CURL_DISABLE_DICT", when = { dict = false } },
+  { value = "CURL_DISABLE_GOPHER", when = { gopher = false } },
+  { value = "CURL_DISABLE_IMAP", when = { imap = false } },
+  { value = "CURL_DISABLE_POP3", when = { pop3 = false } },
+  { value = "CURL_DISABLE_SMTP", when = { smtp = false } },
+  { value = "CURL_DISABLE_TELNET", when = { telnet = false } },
+  { value = "CURL_DISABLE_TFTP", when = { tftp = false } },
+  { value = "CURL_DISABLE_MQTT", when = { mqtt = false } },
+  { value = "CURL_DISABLE_RTSP", when = { rtsp = false } },
+  { value = "CURL_DISABLE_SMB", when = { smb = false } },
+  { value = "CURL_DISABLE_IPFS", when = { ipfs = false } },
+  { value = "CURL_DISABLE_WEBSOCKETS", when = { websockets = false } },
+  { value = "CURL_DISABLE_PROXY", when = { proxy = false } },
+  { value = "CURL_DISABLE_COOKIES", when = { cookies = false } },
+  { value = "CURL_DISABLE_DOH", when = { doh = false } },
+  { value = "CURL_DISABLE_HSTS", when = { hsts = false } },
+  { value = "CURL_DISABLE_HSTS", when = { hsts = true, tls = false } },
+  { value = "CURL_DISABLE_ALTSVC", when = { altsvc = false } },
+  { value = "CURL_DISABLE_NETRC", when = { netrc = false } },
+  { value = "CURL_DISABLE_MIME", when = { mime = false } },
+  { value = "CURL_DISABLE_FORM_API", when = { mime = false } },
+  { value = "CURL_DISABLE_VERBOSE_STRINGS", when = { verbose_strings = false } },
+]
 system_deps = [
   { lib = "pthread", when = { os = "linux" } },
   { lib = "ws2_32", when = { os = "windows" } },
@@ -43,112 +69,90 @@ define = "SPN_CURL_IDN"
 [options.ftp]
 type = "bool"
 default = true
-define = "SPN_CURL_FTP"
 
 [options.file]
 type = "bool"
 default = true
-define = "SPN_CURL_FILE"
 
 [options.dict]
 type = "bool"
 default = true
-define = "SPN_CURL_DICT"
 
 [options.gopher]
 type = "bool"
 default = true
-define = "SPN_CURL_GOPHER"
 
 [options.imap]
 type = "bool"
 default = true
-define = "SPN_CURL_IMAP"
 
 [options.pop3]
 type = "bool"
 default = true
-define = "SPN_CURL_POP3"
 
 [options.smtp]
 type = "bool"
 default = true
-define = "SPN_CURL_SMTP"
 
 [options.telnet]
 type = "bool"
 default = true
-define = "SPN_CURL_TELNET"
 
 [options.tftp]
 type = "bool"
 default = true
-define = "SPN_CURL_TFTP"
 
 [options.mqtt]
 type = "bool"
 default = true
-define = "SPN_CURL_MQTT"
 
 [options.rtsp]
 type = "bool"
 default = true
-define = "SPN_CURL_RTSP"
 
 [options.smb]
 type = "bool"
 default = true
-define = "SPN_CURL_SMB"
 
 [options.ipfs]
 type = "bool"
 default = true
-define = "SPN_CURL_IPFS"
 
 [options.websockets]
 type = "bool"
 default = true
-define = "SPN_CURL_WEBSOCKETS"
 
 [options.proxy]
 type = "bool"
 default = true
-define = "SPN_CURL_PROXY"
 
 [options.cookies]
 type = "bool"
 default = true
-define = "SPN_CURL_COOKIES"
 
 [options.doh]
 type = "bool"
 default = true
-define = "SPN_CURL_DOH"
 
 [options.hsts]
 type = "bool"
 default = true
-define = "SPN_CURL_HSTS"
 
 [options.altsvc]
 type = "bool"
 default = true
-define = "SPN_CURL_ALTSVC"
 
 [options.netrc]
 type = "bool"
 default = true
-define = "SPN_CURL_NETRC"
 
 [options.mime]
 type = "bool"
 default = true
-define = "SPN_CURL_MIME"
 
 [options.verbose_strings]
 type = "bool"
 default = true
-define = "SPN_CURL_VERBOSE_STRINGS"
 
 [[lib]]
 name = "curl"
@@ -166,7 +170,6 @@ source = [
   "lib/vtls/*.c",
   "lib/vquic/*.c",
   "lib/vssh/*.c",
-  { path = "config/ca_bundle.c", tree = "manifest", when = { tls = true, os = { not = "windows" } } },
 ]
 system_deps = [
   { framework = "SystemConfiguration" },
