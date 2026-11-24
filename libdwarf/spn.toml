@@ -21,7 +21,6 @@ define = "LIBDWARF_STATIC"
 [options.decompression]
 type = "bool"
 default = true
-define = "SPN_LIBDWARF_DECOMPRESSION"
 
 [[lib]]
 name = "dwarf"
@@ -31,6 +30,10 @@ source = ["src/lib/libdwarf/*.c"]
 define = [
   "LIBDWARF_BUILD",
   { value = "_GNU_SOURCE", when = { os = "linux" } },
+  { value = "HAVE_ZLIB", when = { decompression = true } },
+  { value = "HAVE_ZLIB_H", when = { decompression = true } },
+  { value = "HAVE_ZSTD", when = { decompression = true } },
+  { value = "HAVE_ZSTD_H", when = { decompression = true } },
 ]
 
 [[example]]
